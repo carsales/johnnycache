@@ -2,6 +2,8 @@
 
 **An IIS HTTP module that prevents unwanted caching of CSS + JS assets**
 
+![Johnnycache!!!](JohnnyCache.jpg)
+
 ## License
 
 [Apache License, Version 2.0](LICENSE.md)
