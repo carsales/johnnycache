@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("johnnycache")]
-[assembly: AssemblyDescription(" An IIS HTTP module that prevents unwanted caching of CSS + JS assets")]
+[assembly: AssemblyDescription(" An IIS HTTP module that prevents unwanted caching of static assets")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Carsales.com Ltd")]
 [assembly: AssemblyProduct("johnnycache")]
