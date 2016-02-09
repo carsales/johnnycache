@@ -9,8 +9,8 @@ namespace JohnnyCache
     {
         public static IHtmlString Render(string virtualPath, string alt = null, string width = null, string height = null, string @class = null, string style = null)
         {
-            if (Common.RenderedTags.ContainsKey(virtualPath))
-                return Common.RenderedTags[virtualPath];
+            if (Common.IsRenderedTagCached(virtualPath))
+                return Common.GetCachedRenderedTag(virtualPath);
 
             var johnnyPath = Common.BuildJohnnyPath(virtualPath);
 
@@ -29,7 +29,7 @@ namespace JohnnyCache
                 tb.MergeAttribute("style", style);
 
             var renderedTag = MvcHtmlString.Create(tb.ToString());
-            Common.RenderedTags[virtualPath] = renderedTag;
+            Common.CacheRenderedTag(virtualPath, renderedTag);
             return renderedTag;
         }
     }

@@ -15,18 +15,28 @@ namespace JohnnyCache
 
         public static IHtmlString Render(string virtualPath)
         {
-            if (Common.RenderedTags.ContainsKey(virtualPath))
-                return Common.RenderedTags[virtualPath];
+            var renderedTag = MvcHtmlString.Empty;
 
-            var johnnyPath = Common.BuildJohnnyPath(virtualPath);
-            var resolvedPath = Common.ResolveVirtualPath(johnnyPath);
+            try
+            {
+                if (Common.IsRenderedTagCached(virtualPath))
+                    return Common.GetCachedRenderedTag(virtualPath);
 
-            var tagBuilder = new TagBuilder("script");
-            tagBuilder.MergeAttribute("src", resolvedPath);
-            tagBuilder.MergeAttribute("type", "text/javascript");
+                var johnnyPath = Common.BuildJohnnyPath(virtualPath);
+                var resolvedPath = Common.ResolveVirtualPath(johnnyPath);
 
-            var renderedTag = MvcHtmlString.Create(tagBuilder.ToString(TagRenderMode.Normal));
-            Common.RenderedTags[virtualPath] = renderedTag;
+                var tagBuilder = new TagBuilder("script");
+                tagBuilder.MergeAttribute("src", resolvedPath);
+                tagBuilder.MergeAttribute("type", "text/javascript");
+                renderedTag = MvcHtmlString.Create(tagBuilder.ToString(TagRenderMode.Normal));
+
+                Common.CacheRenderedTag(virtualPath, renderedTag);
+            }
+            catch (Exception ex)
+            {
+                Common.OnException(ex);
+            }
+
             return renderedTag;
         }
     }
